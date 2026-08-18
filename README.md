@@ -133,7 +133,7 @@ an unrelated branch — see the charter below.
 
 ## Sprint 1 assignments
 
-| Name | Ticket | What I want to get better at |
+| Nick | Ticket | I want to get better at Everything |
 |---|---|---|
 
 ---
