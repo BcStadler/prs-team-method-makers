@@ -1,0 +1,34 @@
+name: Create sprint issues
+
+on:
+  workflow_dispatch:
+    inputs:
+      sprint:
+        description: Which sprint's tickets to open
+        required: true
+        type: choice
+        options: ["1", "2", "3", "4"]
+
+# Naming any permission sets every unnamed one to "none", so `contents: read` has to be
+# spelled out — without it actions/checkout cannot read this repository, and on a private
+# repo it fails with a misleading "repository not found".
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          for file in tickets/sprint-${{ inputs.sprint }}/*.md; do
+            title=$(head -n 1 "$file" | sed 's/^# //')
+            tail -n +2 "$file" \
+              | sed "s|](../images/|](https://raw.githubusercontent.com/$REPO/main/tickets/images/|g" \
+              > /tmp/body.md
+            gh issue create --title "$title" --body-file /tmp/body.md
+          done

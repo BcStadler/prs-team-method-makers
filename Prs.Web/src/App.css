@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap");
+
+body {
+  font-family: "Raleway", sans-serif;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.parallax-section {
+  height: 60vh;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.slanted {
+  transform: skewY(8deg);
+  /* clip-path: polygon(-920px -274px, 2264px 119px, 2241px 465px, -920px 97px); */
+}
+
+#section1 {
+  background-image: url("../images/home/river-5900547_640.jpg");
+}
+
+#section2 {
+  background-image: url("../images/home/cabaneros-national-park-6724690_640.jpg");
+}
+
+a {
+  --bs-link-color-rgb: 0, 122, 255;
+}
+
+.nav-pills {
+  /* --bs-nav-pills-border-radius: var(--bs-border-radius); */
+  --bs-nav-pills-link-active-color: #fff;
+  --bs-nav-pills-link-active-bg: #007aff;
+}
+
+.nav {
+  --bs-nav-link-padding-y: 0.6rem;
+}
+
+table th {
+  width: auto !important;
+}
+
+.card > .progress {
+  height: 0.1875rem;
+  background: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.list .card:hover {
+  background-color: var(--bs-tertiary-bg);
+  transform: scale(1.025);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px;
+}
+
+.signin {
+  background: rgb(214, 242, 255);
+  background: radial-gradient(circle, rgba(214, 242, 255, 1) 31%, rgba(237, 250, 255, 1) 60%);
+}
+
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+.skeleton-text {
+  width: 18ch;
+  height: .8rem;
+  display: block;
+  border-radius: 0.25rem;
+  content: " ";
+  margin: .2rem;
+}
+
+button.skeleton {
+  width: 62px;
+  height: 38px;
+}
+
+/* react-bootstrap always adds .dropdown-toggle (and its caret) to a
+   Dropdown.Toggle. The card/row "three dots" menus show the icon only. */
+.dropdown-toggle.no-caret::after {
+  display: none;
+}
+
+span.badge {
+  text-transform: lowercase;
+}
+
+span.badge::first-letter {
+  text-transform: uppercase!important;
+}

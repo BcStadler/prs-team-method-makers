@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="600" viewBox="0 0 880 600" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title>S1-C — the requester filter, on its own</title>
+  <desc>Two views of the Requested by filter as S1-C delivers it. First the dropdown open, listing Anyone, the signed-in user marked you, then the other users. Second the filter applied to Dana Ward, with the URL carrying userId and the table narrowed to her two requests.</desc>
+
+  <rect width="880" height="600" fill="#ffffff"/>
+
+  <text x="24" y="20" font-size="11" fill="#adb5bd">The dropdown S1-C adds — no “Anyone else” yet, that arrives with S2-D</text>
+
+  <text x="24" y="46" font-size="12" fill="#6c757d">Status</text>
+  <rect x="24" y="54" width="150" height="34" rx="5" fill="#ffffff" stroke="#ced4da"/>
+  <text x="36" y="76" font-size="13" fill="#212529">All</text>
+  <path d="M152 68 l5 5 l5 -5" stroke="#6c757d" stroke-width="1.5" fill="none"/>
+
+  <text x="190" y="46" font-size="12" fill="#6c757d">Requested by</text>
+  <rect x="190" y="54" width="210" height="34" rx="5" fill="#ffffff" stroke="#0d6efd" stroke-width="1.5"/>
+  <text x="202" y="76" font-size="13" fill="#212529">Dana Ward</text>
+  <path d="M378 72 l5 -5 l5 5" stroke="#6c757d" stroke-width="1.5" fill="none"/>
+
+  <rect x="190" y="92" width="210" height="174" rx="6" fill="#ffffff" stroke="#ced4da"/>
+  <text x="202" y="114" font-size="13" fill="#212529">Anyone</text>
+  <line x1="190" y1="124" x2="400" y2="124" stroke="#f1f3f5"/>
+  <text x="202" y="142" font-size="13" fill="#212529">Torrey Schoen <tspan fill="#adb5bd">(you)</tspan></text>
+  <line x1="190" y1="152" x2="400" y2="152" stroke="#f1f3f5"/>
+  <rect x="191" y="154" width="208" height="26" fill="#e7f1ff"/>
+  <text x="202" y="172" font-size="13" fill="#0a58ca">Dana Ward</text>
+  <text x="202" y="198" font-size="13" fill="#212529">Marcus Feil</text>
+  <text x="202" y="224" font-size="13" fill="#212529">Priya Raman</text>
+  <text x="202" y="250" font-size="13" fill="#212529">Sam Okafor</text>
+
+  <path d="M420 143 l-14 0" stroke="#adb5bd" stroke-width="1"/>
+  <text x="426" y="140" font-size="11" fill="#6c757d">you appear once, near the top,</text>
+  <text x="426" y="153" font-size="11" fill="#6c757d">marked — not duplicated below</text>
+
+  <line x1="24" y1="292" x2="856" y2="292" stroke="#dee2e6"/>
+
+  <text x="24" y="318" font-size="11" fill="#adb5bd">Applied — both filters combine, and the URL carries them</text>
+
+  <text x="24" y="344" font-size="12" fill="#6c757d">Status</text>
+  <rect x="24" y="352" width="150" height="34" rx="5" fill="#ffffff" stroke="#ced4da"/>
+  <text x="36" y="374" font-size="13" fill="#212529">All</text>
+  <path d="M152 366 l5 5 l5 -5" stroke="#6c757d" stroke-width="1.5" fill="none"/>
+
+  <text x="190" y="344" font-size="12" fill="#6c757d">Requested by</text>
+  <rect x="190" y="352" width="210" height="34" rx="5" fill="#ffffff" stroke="#ced4da"/>
+  <text x="202" y="374" font-size="13" fill="#212529">Dana Ward</text>
+  <path d="M378 366 l5 5 l5 -5" stroke="#6c757d" stroke-width="1.5" fill="none"/>
+
+  <text x="24" y="410" font-size="11.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#adb5bd">/requests?userId=2</text>
+
+  <rect x="24" y="424" width="832" height="156" rx="10" fill="#f8f9fa"/>
+  <text x="44" y="448" font-size="11.5" fill="#6c757d">Description</text>
+  <text x="392" y="448" font-size="11.5" fill="#6c757d">Status</text>
+  <text x="498" y="448" font-size="11.5" fill="#6c757d">Total</text>
+  <text x="586" y="448" font-size="11.5" fill="#6c757d">Requested by</text>
+
+  <line x1="40" y1="460" x2="840" y2="460" stroke="#dee2e6"/>
+  <text x="44" y="478" font-size="13" fill="#212529">Standing desk converters</text>
+  <text x="44" y="492" font-size="11" fill="#6c757d">Ergonomic assessment recommended</text>
+  <rect x="392" y="468" width="60" height="19" rx="4" fill="#ffc107"/>
+  <text x="422" y="481.5" font-size="10.5" fill="#412402" text-anchor="middle">REVIEW</text>
+  <text x="498" y="481" font-size="13" fill="#212529">$412.50</text>
+  <text x="586" y="478" font-size="13" fill="#212529">Dana Ward</text>
+  <text x="586" y="492" font-size="11" fill="#6c757d">Pickup</text>
+  <text x="836" y="483" font-size="15" fill="#007AFF" text-anchor="end">⋮</text>
+
+  <line x1="40" y1="504" x2="840" y2="504" stroke="#dee2e6"/>
+  <text x="44" y="522" font-size="13" fill="#212529">Conference room whiteboard</text>
+  <text x="44" y="536" font-size="11" fill="#6c757d">Existing one is damaged</text>
+  <rect x="392" y="512" width="72" height="19" rx="4" fill="#198754"/>
+  <text x="428" y="525.5" font-size="10.5" fill="#ffffff" text-anchor="middle">APPROVED</text>
+  <text x="498" y="525" font-size="13" fill="#212529">$89.99</text>
+  <text x="586" y="522" font-size="13" fill="#212529">Dana Ward</text>
+  <text x="586" y="536" font-size="11" fill="#6c757d">Pickup</text>
+  <text x="836" y="527" font-size="15" fill="#007AFF" text-anchor="end">⋮</text>
+
+  <text x="500" y="410" font-size="11" fill="#6c757d">no quick views, no Clear filters, no Review/View line —</text>
+  <text x="500" y="423" font-size="11" fill="#6c757d">those are S2-F, S2-E and S1-B</text>
+</svg>

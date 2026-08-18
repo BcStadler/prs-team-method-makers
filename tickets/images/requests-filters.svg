@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="676" viewBox="0 0 880 676" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title>Requests page with status and requested-by filters</title>
+  <desc>Prototype of the single PRS requests page: quick views, a Status filter, a Requested by filter, the resulting URL, and the requests table. Each row shows the requester, the delivery mode, and whether the signed-in reviewer may review that request.</desc>
+
+  <rect width="880" height="676" fill="#ffffff"/>
+
+  <rect x="0" y="0" width="880" height="44" fill="#f8f9fa"/>
+  <rect x="24" y="13" width="18" height="18" rx="3" fill="#007AFF"/>
+  <text x="52" y="27" font-size="14" fill="#212529">Purchase Request System</text>
+  <circle cx="700" cy="22" r="13" fill="#cfe2ff"/>
+  <text x="700" y="26" font-size="10" fill="#6c757d" text-anchor="middle">TS</text>
+  <text x="720" y="19" font-size="13" fill="#212529">Torrey Schoen</text>
+  <text x="720" y="32" font-size="10.5" fill="#6c757d">Reviewer</text>
+  <path d="M842 20 l5 5 l5 -5" stroke="#6c757d" stroke-width="1.5" fill="none"/>
+
+  <text x="24" y="76" font-size="20" fill="#212529">Requests</text>
+  <rect x="712" y="60" width="144" height="30" rx="5" fill="#0d6efd"/>
+  <text x="784" y="80" font-size="12.5" fill="#ffffff" text-anchor="middle">Create a request</text>
+  <line x1="24" y1="100" x2="856" y2="100" stroke="#dee2e6" stroke-width="2"/>
+
+  <rect x="24" y="116" width="88" height="27" rx="5" fill="#e7f1ff" stroke="#9ec5fe"/>
+  <text x="68" y="133.5" font-size="12" fill="#0a58ca" text-anchor="middle">Everything</text>
+  <rect x="120" y="116" width="132" height="27" rx="5" fill="#ffffff" stroke="#ced4da"/>
+  <text x="186" y="133.5" font-size="12" fill="#212529" text-anchor="middle">Submitted by you</text>
+  <rect x="260" y="116" width="152" height="27" rx="5" fill="#ffffff" stroke="#ced4da"/>
+  <text x="336" y="133.5" font-size="12" fill="#212529" text-anchor="middle">Awaiting your review</text>
+
+  <text x="24" y="172" font-size="12" fill="#6c757d">Status</text>
+  <rect x="24" y="180" width="150" height="34" rx="5" fill="#ffffff" stroke="#ced4da"/>
+  <text x="36" y="202" font-size="13" fill="#212529">All</text>
+  <path d="M152 194 l5 5 l5 -5" stroke="#6c757d" stroke-width="1.5" fill="none"/>
+
+  <text x="190" y="172" font-size="12" fill="#6c757d">Requested by</text>
+  <rect x="190" y="180" width="210" height="34" rx="5" fill="#ffffff" stroke="#ced4da"/>
+  <text x="202" y="202" font-size="13" fill="#212529">Anyone</text>
+  <path d="M378 194 l5 5 l5 -5" stroke="#6c757d" stroke-width="1.5" fill="none"/>
+
+  <rect x="416" y="180" width="104" height="34" rx="5" fill="#ffffff" stroke="#adb5bd"/>
+  <text x="468" y="202" font-size="12.5" fill="#212529" text-anchor="middle">Clear filters</text>
+
+  <text x="24" y="240" font-size="11.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#adb5bd">/requests</text>
+
+  <rect x="24" y="254" width="832" height="400" rx="10" fill="#f8f9fa"/>
+  <text x="44" y="278" font-size="11.5" fill="#6c757d">Description</text>
+  <text x="392" y="278" font-size="11.5" fill="#6c757d">Status</text>
+  <text x="498" y="278" font-size="11.5" fill="#6c757d">Total</text>
+  <text x="586" y="278" font-size="11.5" fill="#6c757d">Requested by</text>
+
+  <line x1="40" y1="290" x2="840" y2="290" stroke="#dee2e6"/>
+  <text x="44" y="308" font-size="13" fill="#212529">Replace office chairs</text>
+  <text x="44" y="322" font-size="11" fill="#6c757d">Current chairs are broken and unsafe</text>
+  <rect x="392" y="298" width="46" height="19" rx="4" fill="#0d6efd"/>
+  <text x="415" y="311.5" font-size="10.5" fill="#ffffff" text-anchor="middle">NEW</text>
+  <text x="498" y="311" font-size="13" fill="#212529">$0.00</text>
+  <text x="586" y="308" font-size="13" fill="#212529">Torrey Schoen <tspan fill="#adb5bd">(you)</tspan></text>
+  <text x="586" y="322" font-size="11" fill="#6c757d">Delivery</text>
+  <text x="586" y="336" font-size="11" fill="#adb5bd">View only</text>
+  <text x="836" y="317" font-size="15" fill="#007AFF" text-anchor="end">⋮</text>
+
+  <line x1="40" y1="348" x2="840" y2="348" stroke="#dee2e6"/>
+  <text x="44" y="366" font-size="13" fill="#212529">Standing desk converters</text>
+  <text x="44" y="380" font-size="11" fill="#6c757d">Ergonomic assessment recommended</text>
+  <rect x="392" y="356" width="60" height="19" rx="4" fill="#ffc107"/>
+  <text x="422" y="369.5" font-size="10.5" fill="#412402" text-anchor="middle">REVIEW</text>
+  <text x="498" y="369" font-size="13" fill="#212529">$412.50</text>
+  <text x="586" y="366" font-size="13" fill="#212529">Dana Ward</text>
+  <text x="586" y="380" font-size="11" fill="#6c757d">Pickup</text>
+  <text x="586" y="394" font-size="11" fill="#007AFF">Review</text>
+  <text x="836" y="375" font-size="15" fill="#007AFF" text-anchor="end">⋮</text>
+
+  <line x1="40" y1="406" x2="840" y2="406" stroke="#dee2e6"/>
+  <text x="44" y="424" font-size="13" fill="#212529">Laptop docking stations</text>
+  <text x="44" y="438" font-size="11" fill="#6c757d">New hires start next month</text>
+  <rect x="392" y="414" width="60" height="19" rx="4" fill="#ffc107"/>
+  <text x="422" y="427.5" font-size="10.5" fill="#412402" text-anchor="middle">REVIEW</text>
+  <text x="498" y="427" font-size="13" fill="#212529">$1,240.00</text>
+  <text x="586" y="424" font-size="13" fill="#212529">Marcus Feil</text>
+  <text x="586" y="438" font-size="11" fill="#6c757d">Delivery</text>
+  <text x="586" y="452" font-size="11" fill="#007AFF">Review</text>
+  <text x="836" y="433" font-size="15" fill="#007AFF" text-anchor="end">⋮</text>
+
+  <line x1="40" y1="464" x2="840" y2="464" stroke="#dee2e6"/>
+  <text x="44" y="482" font-size="13" fill="#212529">Conference room whiteboard</text>
+  <text x="44" y="496" font-size="11" fill="#6c757d">Existing one is damaged</text>
+  <rect x="392" y="472" width="72" height="19" rx="4" fill="#198754"/>
+  <text x="428" y="485.5" font-size="10.5" fill="#ffffff" text-anchor="middle">APPROVED</text>
+  <text x="498" y="485" font-size="13" fill="#212529">$89.99</text>
+  <text x="586" y="482" font-size="13" fill="#212529">Dana Ward</text>
+  <text x="586" y="496" font-size="11" fill="#6c757d">Pickup</text>
+  <text x="586" y="510" font-size="11" fill="#adb5bd">View only</text>
+  <text x="836" y="491" font-size="15" fill="#007AFF" text-anchor="end">⋮</text>
+
+  <line x1="40" y1="522" x2="840" y2="522" stroke="#dee2e6"/>
+  <text x="44" y="540" font-size="13" fill="#212529">Ergonomic keyboards</text>
+  <text x="44" y="554" font-size="11" fill="#6c757d">Wrist strain reported</text>
+  <rect x="392" y="530" width="68" height="19" rx="4" fill="#dc3545"/>
+  <text x="426" y="543.5" font-size="10.5" fill="#ffffff" text-anchor="middle">REJECTED</text>
+  <text x="498" y="543" font-size="13" fill="#212529">$220.00</text>
+  <text x="586" y="540" font-size="13" fill="#212529">Torrey Schoen <tspan fill="#adb5bd">(you)</tspan></text>
+  <text x="586" y="554" font-size="11" fill="#6c757d">Signature Delivery</text>
+  <text x="586" y="568" font-size="11" fill="#adb5bd">View only</text>
+  <text x="836" y="549" font-size="15" fill="#007AFF" text-anchor="end">⋮</text>
+
+  <line x1="40" y1="580" x2="840" y2="580" stroke="#dee2e6"/>
+  <text x="44" y="598" font-size="13" fill="#212529">Monitor arms</text>
+  <text x="44" y="612" font-size="11" fill="#6c757d">Reclaim desk space</text>
+  <rect x="392" y="588" width="60" height="19" rx="4" fill="#ffc107"/>
+  <text x="422" y="601.5" font-size="10.5" fill="#412402" text-anchor="middle">REVIEW</text>
+  <text x="498" y="601" font-size="13" fill="#212529">$47.00</text>
+  <text x="586" y="598" font-size="13" fill="#212529">Torrey Schoen <tspan fill="#adb5bd">(you)</tspan></text>
+  <text x="586" y="612" font-size="11" fill="#6c757d">Pickup</text>
+  <text x="586" y="626" font-size="11" fill="#adb5bd">View only</text>
+  <text x="836" y="607" font-size="15" fill="#007AFF" text-anchor="end">⋮</text>
+</svg>

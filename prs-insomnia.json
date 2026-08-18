@@ -1,0 +1,1197 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-07-02T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v8.6.1",
+  "resources": [
+    {
+      "_id": "wrk_prs",
+      "parentId": null,
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "name": "PRS",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_base_prs",
+      "parentId": "wrk_prs",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "name": "Base Environment",
+      "data": {
+        "baseUrl": "http://localhost:5555",
+        "createdId": ""
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "baseUrl",
+          "createdId"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": -900,
+      "_type": "environment"
+    },
+    {
+      "_id": "fld_auth_prs",
+      "parentId": "wrk_prs",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "name": "Auth",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -800,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_login_prs",
+      "parentId": "fld_auth_prs",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/users/login",
+      "name": "Login",
+      "description": "Run this first. hope.hodkiewicz28 is IsReviewer=true and IsAdmin=true — full access. Prs.Api has no JWT/token auth (the Authorization header is not required or checked by any endpoint) — this just confirms valid credentials and returns the full User object.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"username\": \"hope.hodkiewicz28\",\n  \"password\": \"test1234\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response is a user object', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n  insomnia.expect(json).to.have.property('username');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_users",
+      "parentId": "wrk_prs",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "name": "Users",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -600,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_users_getall",
+      "parentId": "fld_users",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/users",
+      "name": "Get All Users",
+      "description": "Returns all users. Expect a 200 with an array. Run Login first.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -500,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response is an array', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.be.an('array');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_users_getbyid",
+      "parentId": "fld_users",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/users/1",
+      "name": "Get User by Id",
+      "description": "Returns a single user by ID. Try ID 1 for Torrey Schoen. Expect a 200 with an id field.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -400,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_users_getbyid_notfound",
+      "parentId": "fld_users",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/users/9999",
+      "name": "Get User by Id (Not Found)",
+      "description": "Returns 404 for a user ID that doesn't exist. Uses ID 9999.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -300,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 404', () => {\n  insomnia.expect(statusCode).to.equal(404);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_users_create",
+      "parentId": "fld_users",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/users",
+      "name": "Create User",
+      "description": "Creates a new user. Expect a 201 with the created user, including its new id.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"username\": \"new.user\",\n  \"password\": \"test1234\",\n  \"firstName\": \"New\",\n  \"lastName\": \"User\",\n  \"phone\": \"5551234567\",\n  \"email\": \"new.user@example.com\",\n  \"isReviewer\": false,\n  \"isAdmin\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\nconst body = statusCode === 201 ? insomnia.response.json() : null;\ninsomnia.test('Status is 201', () => {\n  insomnia.expect(statusCode).to.equal(201);\n});\ninsomnia.test('Response has an id field', () => {\n  insomnia.expect(body).to.have.property('id');\n});\nif (body && body.id !== undefined) {\n  insomnia.environment.set('createdId', body.id);\n}",
+      "_type": "request"
+    },
+    {
+      "_id": "req_users_update",
+      "parentId": "fld_users",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/users/1",
+      "name": "Update User",
+      "description": "Updates an existing user by ID. Try ID 1 for Torrey Schoen. Expect a 200 with the updated user.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"id\": 1,\n  \"username\": \"torrey.schoen\",\n  \"password\": \"test1234\",\n  \"firstName\": \"Torrey\",\n  \"lastName\": \"Schoen\",\n  \"phone\": \"3039653180\",\n  \"email\": \"torrey.schoen@example.com\",\n  \"isReviewer\": false,\n  \"isAdmin\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_users_delete",
+      "parentId": "fld_users",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/users/{{ _.createdId }}",
+      "name": "Delete User",
+      "description": "Deletes a user by ID. Expect a 204 with no response body.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 0,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 204', () => {\n  insomnia.expect(statusCode).to.equal(204);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_vendors",
+      "parentId": "wrk_prs",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "name": "Vendors",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 100,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_vendors_getall",
+      "parentId": "fld_vendors",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/vendors",
+      "name": "Get All Vendors",
+      "description": "Returns all vendors. Expect a 200 with an array. Run Login first.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response is an array', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.be.an('array');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_vendors_getbyid",
+      "parentId": "fld_vendors",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/vendors/1",
+      "name": "Get Vendor by Id",
+      "description": "Returns a single vendor by ID. Try ID 1 for Bailey, Baumbach and Senger. Expect a 200 with an id field.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 300,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_vendors_getbyid_notfound",
+      "parentId": "fld_vendors",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/vendors/9999",
+      "name": "Get Vendor by Id (Not Found)",
+      "description": "Returns 404 for a vendor ID that doesn't exist. Uses ID 9999.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 400,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 404', () => {\n  insomnia.expect(statusCode).to.equal(404);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_vendors_create",
+      "parentId": "fld_vendors",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/vendors",
+      "name": "Create Vendor",
+      "description": "Creates a new vendor. Expect a 201 with the created vendor, including its new id.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"TEST-VN\",\n  \"name\": \"Test Vendor\",\n  \"address\": \"123 Main St\",\n  \"city\": \"Cincinnati\",\n  \"state\": \"OH\",\n  \"zip\": \"45202\",\n  \"phone\": \"5135551234\",\n  \"email\": \"test@testvendor.com\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 500,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\nconst body = statusCode === 201 ? insomnia.response.json() : null;\ninsomnia.test('Status is 201', () => {\n  insomnia.expect(statusCode).to.equal(201);\n});\ninsomnia.test('Response has an id field', () => {\n  insomnia.expect(body).to.have.property('id');\n});\nif (body && body.id !== undefined) {\n  insomnia.environment.set('createdId', body.id);\n}",
+      "_type": "request"
+    },
+    {
+      "_id": "req_vendors_update",
+      "parentId": "fld_vendors",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/vendors/1",
+      "name": "Update Vendor",
+      "description": "Updates an existing vendor by ID. Try ID 1 for Bailey, Baumbach and Senger. Expect a 200 with the updated vendor.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"id\": 1,\n  \"code\": \"BAIL-EY\",\n  \"name\": \"Bailey, Baumbach and Senger\",\n  \"address\": \"3293 State Street\",\n  \"city\": \"Considinetown\",\n  \"state\": \"ME\",\n  \"zip\": \"16819\",\n  \"phone\": \"2293729117\",\n  \"email\": \"support@BAIL-EY.com\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 600,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_vendors_delete",
+      "parentId": "fld_vendors",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/vendors/{{ _.createdId }}",
+      "name": "Delete Vendor",
+      "description": "Deletes a vendor by ID. Expect a 204 with no response body.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 204', () => {\n  insomnia.expect(statusCode).to.equal(204);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_products",
+      "parentId": "wrk_prs",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "name": "Products",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 800,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_products_getall",
+      "parentId": "fld_products",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/products",
+      "name": "Get All Products",
+      "description": "Returns all products. Expect a 200 with an array. Run Login first.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response is an array', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.be.an('array');\n});\ninsomnia.test('each item has a populated vendor navigation property', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.every(item => item.vendor !== null && typeof item.vendor === 'object')).to.be.true;\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_products_getbyid",
+      "parentId": "fld_products",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/products/1",
+      "name": "Get Product by Id",
+      "description": "Returns a single product by ID. Try ID 1 for Oriental Silk Keyboard. Expect a 200 with an id field.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});\ninsomnia.test('vendor navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.vendor).to.be.an('object');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_products_getbyid_notfound",
+      "parentId": "fld_products",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/products/9999",
+      "name": "Get Product by Id (Not Found)",
+      "description": "Returns 404 for a product ID that doesn't exist. Uses ID 9999.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 404', () => {\n  insomnia.expect(statusCode).to.equal(404);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_products_create",
+      "parentId": "fld_products",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/products",
+      "name": "Create Product",
+      "description": "Creates a new product. Expect a 201 with the created product, including its new id.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"partNumber\": \"TEST-001\",\n  \"name\": \"Test Product\",\n  \"price\": 9.99,\n  \"unit\": \"Each\",\n  \"photoPath\": null,\n  \"vendorId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\nconst body = statusCode === 201 ? insomnia.response.json() : null;\ninsomnia.test('Status is 201', () => {\n  insomnia.expect(statusCode).to.equal(201);\n});\ninsomnia.test('Response has an id field', () => {\n  insomnia.expect(body).to.have.property('id');\n});\nif (body && body.id !== undefined) {\n  insomnia.environment.set('createdId', body.id);\n}\ninsomnia.test('vendor navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.vendor).to.be.an('object');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_products_update",
+      "parentId": "fld_products",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/products/1",
+      "name": "Update Product",
+      "description": "Updates an existing product by ID. Try ID 1 for Oriental Silk Keyboard. Expect a 200 with the updated product.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"id\": 1,\n  \"partNumber\": \"978-0-632-08712-9\",\n  \"name\": \"Oriental Silk Keyboard\",\n  \"price\": 41.09,\n  \"unit\": \"Each\",\n  \"photoPath\": null,\n  \"vendorId\": 18\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1300,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});\ninsomnia.test('vendor navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.vendor).to.be.an('object');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_products_delete",
+      "parentId": "fld_products",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/products/{{ _.createdId }}",
+      "name": "Delete Product",
+      "description": "Deletes a product by ID. Expect a 204 with no response body.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1400,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 204', () => {\n  insomnia.expect(statusCode).to.equal(204);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_requests",
+      "parentId": "wrk_prs",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "name": "Requests",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1500,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_requests_getall",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests",
+      "name": "Get All Requests",
+      "description": "Returns all requests. Expect a 200 with an array. Run Login first.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1600,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response is an array', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.be.an('array');\n});\ninsomnia.test('each item has a populated user navigation property', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.every(item => item.user !== null && typeof item.user === 'object')).to.be.true;\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_getall_filtered",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests?status=NEW",
+      "name": "Get All Requests (Filter by Status)",
+      "description": "Returns requests filtered by status via a query parameter. Expect a 200 with an array where every item has status NEW.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response is an array', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.be.an('array');\n});\ninsomnia.test('All items have matching status', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.every(r => r.status === 'NEW')).to.be.true;\n});\ninsomnia.test('each item has a populated user navigation property', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.every(item => item.user !== null && typeof item.user === 'object')).to.be.true;\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_getbyid",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests/1",
+      "name": "Get Request by Id",
+      "description": "Returns a single request by ID. Expect a 200 with an id field.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});\ninsomnia.test('user navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.user).to.be.an('object');\n});\ninsomnia.test('requestLines each have a populated product navigation property', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.requestLines).to.be.an('array');\n  insomnia.expect(json.requestLines.every(c => c.product !== null && typeof c.product === 'object')).to.be.true;\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_getbyid_notfound",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests/9999",
+      "name": "Get Request by Id (Not Found)",
+      "description": "Returns 404 for a request ID that doesn't exist. Uses ID 9999.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 404', () => {\n  insomnia.expect(statusCode).to.equal(404);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_create",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests",
+      "name": "Create Request",
+      "description": "Creates a new request. Expect a 201 with the created request, including its new id.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"description\": \"Test Request\",\n  \"justification\": \"Needed for testing\",\n  \"deliveryMode\": \"Pickup\",\n  \"userId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\nconst body = statusCode === 201 ? insomnia.response.json() : null;\ninsomnia.test('Status is 201', () => {\n  insomnia.expect(statusCode).to.equal(201);\n});\ninsomnia.test('Response has an id field', () => {\n  insomnia.expect(body).to.have.property('id');\n});\nif (body && body.id !== undefined) {\n  insomnia.environment.set('createdId', body.id);\n}\ninsomnia.test('user navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.user).to.be.an('object');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_update",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests/1",
+      "name": "Update Request",
+      "description": "Updates an existing request by ID. Expect a 200 with the updated request.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"id\": 1,\n  \"description\": \"Test Request\",\n  \"justification\": \"Needed for testing\",\n  \"deliveryMode\": \"Pickup\",\n  \"status\": \"NEW\",\n  \"total\": 0,\n  \"userId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});\ninsomnia.test('user navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.user).to.be.an('object');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_delete",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests/{{ _.createdId }}",
+      "name": "Delete Request",
+      "description": "Deletes a request by ID. Expect a 204 with no response body.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 204', () => {\n  insomnia.expect(statusCode).to.equal(204);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_review",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests/1/review",
+      "name": "Send for Review",
+      "description": "Advances a request from NEW to REVIEW — or auto-approves straight to APPROVED if its Total is $50 or less. No body needed.",
+      "method": "PUT",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2300,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has a status field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('status');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_approve",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests/1/approve",
+      "name": "Approve",
+      "description": "Approves a request, setting status to APPROVED. No body needed.",
+      "method": "PUT",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2400,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has a status field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('status');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requests_reject",
+      "parentId": "fld_requests",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requests/1/reject",
+      "name": "Reject",
+      "description": "Rejects a request. Body is a JSON-encoded string (not an object) — e.g. \"reason text\" including the quotes. ASP.NET Core's [FromBody] string binding requires Content-Type: application/json even though the payload is just a string; a text/plain body returns 415.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "\"Does not meet procurement policy requirements\""
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2500,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has a rejectionReason field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('rejectionReason');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_requestlines",
+      "parentId": "wrk_prs",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "name": "RequestLines",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 2600,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_requestlines_getall",
+      "parentId": "fld_requestlines",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requestlines",
+      "name": "Get All Request Lines",
+      "description": "Returns all request lines. Expect a 200 with an array. Run Login first.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response is an array', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.be.an('array');\n});\ninsomnia.test('each item has a populated product navigation property', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.every(item => item.product !== null && typeof item.product === 'object')).to.be.true;\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requestlines_getbyid",
+      "parentId": "fld_requestlines",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requestlines/1",
+      "name": "Get Request Line by Id",
+      "description": "Returns a single request line by ID. Expect a 200 with an id field.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});\ninsomnia.test('product navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.product).to.be.an('object');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requestlines_getbyid_notfound",
+      "parentId": "fld_requestlines",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requestlines/9999",
+      "name": "Get Request Line by Id (Not Found)",
+      "description": "Returns 404 for a request line ID that doesn't exist. Uses ID 9999.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 404', () => {\n  insomnia.expect(statusCode).to.equal(404);\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requestlines_create",
+      "parentId": "fld_requestlines",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requestlines",
+      "name": "Create Request Line",
+      "description": "Creates a new request line on an existing request and recalculates the request's total. Expect a 201 with the created request line, including its new id.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"requestId\": 1,\n  \"productId\": 1,\n  \"quantity\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 3000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\nconst body = statusCode === 201 ? insomnia.response.json() : null;\ninsomnia.test('Status is 201', () => {\n  insomnia.expect(statusCode).to.equal(201);\n});\ninsomnia.test('Response has an id field', () => {\n  insomnia.expect(body).to.have.property('id');\n});\nif (body && body.id !== undefined) {\n  insomnia.environment.set('createdId', body.id);\n}\ninsomnia.test('product navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.product).to.be.an('object');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requestlines_update",
+      "parentId": "fld_requestlines",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requestlines/1",
+      "name": "Update Request Line",
+      "description": "Updates an existing request line by ID and recalculates the request's total. Expect a 200 with the updated request line.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"id\": 1,\n  \"requestId\": 1,\n  \"productId\": 1,\n  \"quantity\": 2\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 3100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 200', () => {\n  insomnia.expect(statusCode).to.equal(200);\n});\ninsomnia.test('Response has an id field', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json).to.have.property('id');\n});\ninsomnia.test('product navigation property is populated', () => {\n  const json = insomnia.response.json();\n  insomnia.expect(json.product).to.be.an('object');\n});",
+      "_type": "request"
+    },
+    {
+      "_id": "req_requestlines_delete",
+      "parentId": "fld_requestlines",
+      "modified": 1782950400000,
+      "created": 1782950400000,
+      "url": "{{ _.baseUrl }}/api/requestlines/{{ _.createdId }}",
+      "name": "Delete Request Line",
+      "description": "Deletes a request line by ID and recalculates the request's total. Expect a 204 with no response body.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 3200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "const statusCode = insomnia.response.code;\ninsomnia.test('Status is 204', () => {\n  insomnia.expect(statusCode).to.equal(204);\n});",
+      "_type": "request"
+    }
+  ]
+}
