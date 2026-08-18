@@ -3,16 +3,16 @@
 The Purchase Request System, worked as a team. Three developers, one repository, a backlog
 of tickets, and a working agreement.
 
-| Where | What |
-|---|---|
-| `Prs.Api/` | ASP.NET Core 8 Web API — EF Core, SQL Server |
-| `Prs.Web/` | React + TypeScript front end — Vite, Bootstrap 5 |
-| `Prs.Db/populate-prs.sql` | Seed data |
-| `tickets/` | The ticket text for all four sprints |
-| `prs-insomnia.json` | Insomnia collection for the API |
+| Where                             | What                                             |
+| --------------------------------- | ------------------------------------------------ |
+| `Prs.Api/`                        | ASP.NET Core 8 Web API — EF Core, SQL Server     |
+| `Prs.Web/`                        | React + TypeScript front end — Vite, Bootstrap 5 |
+| `Prs.Db/populate-prs.sql`         | Seed data                                        |
+| `tickets/`                        | The ticket text for all four sprints             |
+| `prs-insomnia.json`               | Insomnia collection for the API                  |
 | `.github/copilot-instructions.md` | The conventions Copilot is sent on every request |
 
-Both projects live in **one** repository — most tickets change an endpoint *and* the page
+Both projects live in **one** repository — most tickets change an endpoint _and_ the page
 that calls it, which is one branch, one pull request, one review.
 
 ---
@@ -110,17 +110,17 @@ anything destructive, and before verifying your fix.
 The ticket text ships in this repository, one file per ticket, under `tickets/`. Nobody has
 written them into GitHub for you — you do that yourselves, once per sprint:
 
-**Actions** tab → in the **left sidebar** under *All workflows*, click **Create sprint
+**Actions** tab → in the **left sidebar** under _All workflows_, click **Create sprint
 issues** → **Run workflow** (top right of the blue bar) → pick the sprint → **Run
 workflow**.
 
 The workflow name is a link in the left sidebar. The list filling the middle of the page is
-*past runs*, not workflows — that's where people go looking first.
+_past runs_, not workflows — that's where people go looking first.
 
 One issue is created per file, **unassigned**. Assign them yourselves in sprint planning.
 
-*(If Actions isn't available, open the file in `tickets/sprint-N/` and paste it into a new
-issue by hand. Nothing is lost but time.)*
+_(If Actions isn't available, open the file in `tickets/sprint-N/` and paste it into a new
+issue by hand. Nothing is lost but time.)_
 
 Noticed something that isn't your ticket? **New issue** → **Observation**. Don't fix it on
 an unrelated branch — see the charter below.
@@ -131,10 +131,12 @@ an unrelated branch — see the charter below.
 
 <!-- Lesson 1 guide: each student adds their name here on their first pull request. -->
 
+Michael Vesprani
+
 ## Sprint 1 assignments
 
-| Nick | Ticket | I want to get better at Everything |
-|---|---|---|
+| Name | Ticket | What I want to get better at |
+| ---- | ------ | ---------------------------- |
 
 ---
 
@@ -151,7 +153,7 @@ second thing, that's a second branch.
 
 **Name things so a reviewer doesn't have to open the diff.** Branches are
 `type/issue-number-short-slug`; commit messages and pull request titles are written in the
-imperative — *"Recalculate request total when a line is deleted,"* not *"fixed bug."* Because
+imperative — _"Recalculate request total when a line is deleted,"_ not _"fixed bug."_ Because
 we squash-merge, **the pull request title becomes the permanent commit message on `main`** —
 so `wip` on your own branch is fine, and a vague pull request title is not. Full guidance:
 [Naming: branches and commits](https://craigmckeachie.github.io/academy-resources/reference/git-collaboration-quickstart/#naming-branches-and-commits).
@@ -172,8 +174,8 @@ that's honest, and it tells the author what they did and didn't get.
 - Where you used AI, and what you changed or rejected in what it gave you
 
 **A fix states the root cause.** "Fixed the total" is not a description — it says what you
-touched, not what was wrong. *"The date was parsed in the browser's time zone and rendered
-in UTC, so anything after 7pm displayed as the next day"* is.
+touched, not what was wrong. _"The date was parsed in the browser's time zone and rendered
+in UTC, so anything after 7pm displayed as the next day"_ is.
 
 **Fix what you were assigned, not what you happen to notice.** You will spot things that look
 wrong — an odd colour, a clumsy label, a typo — in code no ticket sent you to. Don't quietly
@@ -207,7 +209,7 @@ What doesn't change:
   agent wrote it" is not an answer.
 - **Scope an agent to one ticket.** If the diff touches files the issue doesn't name,
   that's a finding to report, not something to quietly keep.
-- **The AI-use section of your pull request describes what you *rejected*.** "Used agent
+- **The AI-use section of your pull request describes what you _rejected_.** "Used agent
   mode, accepted everything" gets sent back.
 - **Convention violations are yours to catch.** Copilot will reach for DTOs, `[Authorize]`,
   a repository pattern, `EntityState.Modified`, Bootstrap `row`/`col` grid classes,
@@ -241,12 +243,12 @@ A ticket isn't finished until every one of these is true:
 Everything is visible in GitHub, which is the point — contribution shows up daily rather
 than at the end. Per person, across the block:
 
-| | Target |
-|---|---|
-| Pull requests authored | one per assigned ticket, minimum |
-| Pull requests reviewed | at least as many as you authored |
-| Merge conflicts resolved | at least one, hands on keyboard |
-| Defects fixed with a documented root cause | at least one |
+|                                            | Target                           |
+| ------------------------------------------ | -------------------------------- |
+| Pull requests authored                     | one per assigned ticket, minimum |
+| Pull requests reviewed                     | at least as many as you authored |
+| Merge conflicts resolved                   | at least one, hands on keyboard  |
+| Defects fixed with a documented root cause | at least one                     |
 
 If you're at zero reviews halfway through, you're not participating — regardless of how
 much code you've written.
