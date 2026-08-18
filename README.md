@@ -131,7 +131,7 @@ an unrelated branch — see the charter below.
 
 Neb Stadler
 Michael Vesprani
-
+Nick
 ## Sprint 1 assignments
 
 | Name | Ticket | What I want to get better at |
