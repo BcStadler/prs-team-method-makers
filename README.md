@@ -132,7 +132,7 @@ an unrelated branch — see the charter below.
 <!-- Lesson 1 guide: each student adds their name here on their first pull request. -->
 
 Michael Vesprani
-
+Nick
 ## Sprint 1 assignments
 
 | Name | Ticket | What I want to get better at |
