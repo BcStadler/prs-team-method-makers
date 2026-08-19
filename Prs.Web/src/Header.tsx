@@ -58,10 +58,18 @@ function Header() {
                   {user?.firstName.substring(0, 1)}
                   {user?.lastName.substring(0, 1)}
                 </div>
-                <strong>
-                  {" "}
-                  {user?.firstName} {user?.lastName}
-                </strong>
+                <div>
+                  <strong>
+                    {user?.firstName} {user?.lastName}
+                  </strong>
+                  {(user.isReviewer || user.isAdmin) && (
+                    <div className="small text-secondary">
+                      {[user.isReviewer && "Reviewer", user.isAdmin && "Admin"]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </div>
+                  )}
+                </div>
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item href="#">Settings</Dropdown.Item>
