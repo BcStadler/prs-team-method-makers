@@ -129,8 +129,7 @@ an unrelated branch — see the charter below.
 
 ## Team roster
 
-<!-- Lesson 1 guide: each student adds their name here on their first pull request. -->
-
+Ben (Neb) Stadler
 Michael Vesprani
 Nick
 ## Sprint 1 assignments
