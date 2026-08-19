@@ -129,7 +129,7 @@ an unrelated branch — see the charter below.
 
 ## Team roster
 
-Neb Stadler
+Ben (Neb) Stadler
 Michael Vesprani
 Nick
 ## Sprint 1 assignments
