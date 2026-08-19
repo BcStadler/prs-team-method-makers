@@ -136,7 +136,7 @@ Nick
 
 | Name | Ticket | What I want to get better at |
 | ---- | ------ | ---------------------------- |
-
+| Ben  | 1      | I want to get better at solving git log errors
 ---
 
 # Team Charter
