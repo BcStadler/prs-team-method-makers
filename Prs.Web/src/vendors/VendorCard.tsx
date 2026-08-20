@@ -1,3 +1,4 @@
+// src/vendors/VendorCard.tsx
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import { Link } from "react-router-dom";
 import { IVendor } from "./IVendor";
@@ -71,7 +72,6 @@ function VendorCard({ vendor, onRemove }: IVendorCardProps) {
           {vendor.city}, {vendor.state} {vendor.zip}
         </div>
 
-        {/* <abbr title="Phone">P:</abbr> */}
         <div className="text-secondary">{formatPhoneNumber(vendor.phone)}</div>
 
         <div className="text-secondary">{vendor.email}</div>

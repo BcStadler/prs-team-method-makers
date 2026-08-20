@@ -138,6 +138,7 @@ Nick
 | ---- | ------ | ---------------------------- |
 | Ben  |1  /   4| I want to get better at solving git log errors
 | Nick | 2      | I want to get better at solving git log errors
+| Michael | 4      | I want to get better at solving git log errors
 ---
 
 # Team Charter
