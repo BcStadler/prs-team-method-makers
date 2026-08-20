@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 function VendorList() {
   const [loading, setLoading] = useState(false);
   const [vendors, setVendors] = useState<IVendor[]>([]);
-  const vendorCardSkeletons = Array.from(Array(12), (value, index) => {
+  const vendorCardSkeletons = Array.from(Array(12), (_unused, index) => {
     return <VendorCardSkeleton key={index} />;
   });
 
