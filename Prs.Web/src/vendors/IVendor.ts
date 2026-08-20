@@ -1,3 +1,5 @@
+import { IProduct } from "../products/IProduct";
+
 export interface IVendor {
   id: number | undefined;
   code: string;
@@ -8,4 +10,5 @@ export interface IVendor {
   zip: string;
   phone: string;
   email: string;
+  products?: IProduct[];
 }
