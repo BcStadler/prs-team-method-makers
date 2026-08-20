@@ -1,8 +1,6 @@
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import { IRequestLine } from "../requestLines/IRequestLine";
-import { requestLineAPI } from "../requestLines/RequestLineAPI";
-import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface RequestLineTableProps {
   requestId?: number;
@@ -15,7 +13,6 @@ function RequestLineTable({
   requestLines,
   onRemove,
 }: RequestLineTableProps) {
-  const navigate = useNavigate();
   const total = calculateTotal();
 
   function calculateTotal() {
