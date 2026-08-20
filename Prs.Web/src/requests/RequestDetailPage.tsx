@@ -12,6 +12,9 @@ import { useUserContext } from "../App";
 import { IRequestLine } from "../requestLines/IRequestLine";
 import { requestLineAPI } from "../requestLines/RequestLineAPI";
 import { canReviewRequest } from "./requestUtilities";
+import { IComment } from "./IComment";
+import { commentAPI } from "./CommentAPI";
+import CommentSection from "./CommentSection";
 
 interface IRejectionForm {
   rejectionReason: string | undefined;
@@ -22,6 +25,7 @@ function RequestDetailPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [request, setRequest] = useState<IRequest | undefined>(undefined);
+  const [comments, setComments] = useState<IComment[]>([]);
   const [showModal, setShowModal] = useState(false);
   const { user: authenticatedUser } = useUserContext();
 
@@ -44,6 +48,8 @@ function RequestDetailPage() {
     try {
       const request = await requestAPI.find(requestId);
       setRequest(request);
+      const loadedComments = await commentAPI.getByRequestId(requestId);
+      setComments(loadedComments);
     } catch (error: any) {
       toast.error(error.message);
       throw new Error("There was an error loading the request");
@@ -83,7 +89,9 @@ function RequestDetailPage() {
   }
 
   function userCanReview() {
-    return request !== undefined && canReviewRequest(request, authenticatedUser);
+    return (
+      request !== undefined && canReviewRequest(request, authenticatedUser)
+    );
   }
 
   const save: SubmitHandler<IRejectionForm> = async (form: IRejectionForm) => {
@@ -114,7 +122,7 @@ function RequestDetailPage() {
     let requestWithLineRemoved = {
       ...request,
       requestLines: request?.requestLines.filter(
-        (l) => l.id === requestLine.id
+        (l) => l.id === requestLine.id,
       ),
     } as IRequest;
     setRequest(requestWithLineRemoved);
@@ -124,6 +132,14 @@ function RequestDetailPage() {
   useEffect(() => {
     loadRequest();
   }, []);
+
+  const handleCommentAdded = (newComment: IComment) => {
+    setComments([...comments, newComment]);
+  };
+
+  const handleCommentDeleted = (commentId: number) => {
+    setComments(comments.filter((c) => c.id !== commentId));
+  };
 
   return (
     <section className="content container-fluid mx-5 my-2 py-4">
@@ -250,12 +266,27 @@ function RequestDetailPage() {
         </div>
       </div>
       {loading && <p>Loading...</p>}
-      {request && <RequestHeader request={request} user={request.user} />}
+      {request && (
+        <RequestHeader
+          request={request}
+          user={request.user}
+          commentCount={comments.length}
+        />
+      )}
       {request && (
         <RequestLineTable
           requestId={request.id}
           requestLines={request.requestLines}
           onRemove={removeLine}
+        />
+      )}
+      {request && (
+        <CommentSection
+          requestId={request.id}
+          comments={comments}
+          currentUser={authenticatedUser}
+          onCommentAdded={handleCommentAdded}
+          onCommentDeleted={handleCommentDeleted}
         />
       )}
     </section>
