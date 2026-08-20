@@ -20,16 +20,8 @@ namespace Prs.Api.Controllers {
         // GET: api/Requests?status=APPROVED
         // GET: api/Requests?status=REJECTED
         // GET: api/Requests?userId=5
-        // GET: api/Requests?search=printer
-        // GET: api/Requests?sortBy=total&sortDir=desc
-        // GET: api/Requests?sortBy=status&sortDir=asc
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Request>>> GetAll(
-            [FromQuery] string? status = null,
-            [FromQuery] int? userId = null,
-            [FromQuery] string? search = null,
-            [FromQuery] string? sortBy = null,
-            [FromQuery] string? sortDir = null) {
+        public async Task<ActionResult<IEnumerable<Request>>> GetAll([FromQuery] string? status = null, [FromQuery] int? userId = null) {
             var query = _db.Requests
                            .Include(request => request.User)
                            .AsQueryable();
@@ -40,23 +32,6 @@ namespace Prs.Api.Controllers {
 
             if (userId != null) {
                 query = query.Where(request => request.UserId == userId);
-            }
-
-            if (search != null) {
-                query = query.Where(request =>
-                    request.Description.Contains(search) ||
-                    request.Justification.Contains(search));
-            }
-
-            var descending = sortDir == "desc";
-            if (sortBy == "total") {
-                query = descending
-                    ? query.OrderByDescending(request => request.Total)
-                    : query.OrderBy(request => request.Total);
-            } else if (sortBy == "status") {
-                query = descending
-                    ? query.OrderByDescending(request => request.Status)
-                    : query.OrderBy(request => request.Status);
             }
 
             return await query.ToListAsync();

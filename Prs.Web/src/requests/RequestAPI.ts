@@ -4,20 +4,11 @@ import { IRequest } from "./IRequest";
 const url = `${BASE_URL}/requests`;
 
 export const requestAPI = {
-  list(
-    status?: string,
-    userId?: number,
-    search?: string,
-    sortBy?: string,
-    sortDir?: string
-  ): Promise<IRequest[]> {
+  list(status?: string, userId?: number): Promise<IRequest[]> {
     let requestsUrl = `${url}`;
     const params = new URLSearchParams();
     if (status) params.set("status", status.toUpperCase());
     if (userId) params.set("userId", userId.toString());
-    if (search) params.set("search", search);
-    if (sortBy) params.set("sortBy", sortBy);
-    if (sortDir) params.set("sortDir", sortDir);
     if (params.toString()) requestsUrl += `?${params.toString()}`;
     return fetch(requestsUrl).then(checkStatus).then(parseJSON);
   },

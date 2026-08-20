@@ -20,10 +20,7 @@ function RequestTable() {
         searchParams.get("status") ?? undefined,
         searchParams.get("userId")
           ? Number(searchParams.get("userId"))
-          : undefined,
-        searchParams.get("search") ?? undefined,
-        searchParams.get("sortBy") ?? undefined,
-        searchParams.get("sortDir") ?? undefined
+          : undefined
       );
       setRequests(data);
     } catch (error: any) {
@@ -32,13 +29,7 @@ function RequestTable() {
   }
   useEffect(() => {
     loadRequests();
-  }, [
-    searchParams.get("status"),
-    searchParams.get("userId"),
-    searchParams.get("search"),
-    searchParams.get("sortBy"),
-    searchParams.get("sortDir"),
-  ]);
+  }, [searchParams.get("status"), searchParams.get("userId")]);
 
   useEffect(() => {
     async function loadUsers() {
@@ -66,29 +57,6 @@ function RequestTable() {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("userId", (event.target as HTMLSelectElement).value);
     setSearchParams(newParams);
-  }
-
-  function handleSearchChange(event: SyntheticEvent) {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("search", (event.target as HTMLInputElement).value);
-    setSearchParams(newParams);
-  }
-
-  function handleSortClick(column: string) {
-    const currentSortBy = searchParams.get("sortBy");
-    const currentSortDir = searchParams.get("sortDir") ?? "asc";
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("sortBy", column);
-    newParams.set(
-      "sortDir",
-      currentSortBy === column && currentSortDir === "asc" ? "desc" : "asc"
-    );
-    setSearchParams(newParams);
-  }
-
-  function sortIndicator(column: string) {
-    if (searchParams.get("sortBy") !== column) return null;
-    return searchParams.get("sortDir") === "desc" ? " ▼" : " ▲";
   }
 
   const otherUsers = users
@@ -139,19 +107,6 @@ function RequestTable() {
               </option>
             ))}
           </select>
-        </div>
-        <div className="d-flex flex-column w-25">
-          <label htmlFor="search" className="form-label">
-            Search
-          </label>
-          <input
-            id="search"
-            type="text"
-            className="form-control"
-            placeholder="Description or justification"
-            value={searchParams.get("search") ?? ""}
-            onChange={handleSearchChange}
-          />
         </div>
       </div>
       <section className="list d-flex flex-row flex-wrap bg-body-tertiary gap-5 p-4 rounded-4">

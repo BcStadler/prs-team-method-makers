@@ -9,6 +9,7 @@ import ProductsPage from "./products/ProductsPage.tsx";
 import RequestsPage from "./requests/RequestsPage.tsx";
 import VendorCreatePage from "./vendors/VendorCreatePage.tsx";
 import VendorEditPage from "./vendors/VendorEditPage.tsx";
+import VendorDetailPage from "./vendors/VendorDetailPage.tsx";
 import ProductCreatePage from "./products/ProductCreatePage.tsx";
 import ProductEditPage from "./products/ProductEditPage.tsx";
 import UserCreatePage from "./users/UserCreatePage.tsx";
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
             element: <VendorEditPage />,
           },
           {
+            path: "vendors/detail/:id",
+            element: <VendorDetailPage />,
+          },
+          {
             path: "users",
             element: <UsersPage />,
           },
@@ -102,5 +107,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
