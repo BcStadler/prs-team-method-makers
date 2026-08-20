@@ -24,6 +24,4 @@ public class Vendor {
     [StringLength(255)]
     public string? Email { get; set; } = null;
 
-    public ICollection<Product> Products { get; set; } = new List<Product>();
-
 }

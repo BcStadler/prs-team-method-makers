@@ -24,10 +24,8 @@ namespace Prs.Api.Controllers {
         // GET: api/Vendors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Vendor>> GetById(int id) {
-            var vendor = await _db.Vendors
-                .Include(vendor => vendor.Products)
-                .FirstOrDefaultAsync(vendor => vendor.Id == id);
-
+            var vendor = await _db.Vendors.FindAsync(id);
+                
             if (vendor == null) {
                 return NotFound();
             }
