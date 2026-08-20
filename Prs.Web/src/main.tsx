@@ -9,6 +9,7 @@ import ProductsPage from "./products/ProductsPage.tsx";
 import RequestsPage from "./requests/RequestsPage.tsx";
 import VendorCreatePage from "./vendors/VendorCreatePage.tsx";
 import VendorEditPage from "./vendors/VendorEditPage.tsx";
+import VendorDetailPage from "./vendors/VendorDetailPage.tsx";
 import ProductCreatePage from "./products/ProductCreatePage.tsx";
 import ProductEditPage from "./products/ProductEditPage.tsx";
 import UserCreatePage from "./users/UserCreatePage.tsx";
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
           {
             path: "vendors/edit/:id",
             element: <VendorEditPage />,
+          },
+          {
+            path: "vendors/detail/:id",
+            element: <VendorDetailPage />,
           },
           {
             path: "users",
