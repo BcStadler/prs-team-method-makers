@@ -67,7 +67,7 @@ function ProductCard({ product, onRemove }: IProductCardProps) {
         <br />
         {/* <abbr title="Phone">P:</abbr> */}
         <div className="fw-lighter text-secondary  fs-6 mt-5">
-          {product.vendor.name}
+          {product.vendor?.name ?? "Unknown vendor"}
         </div>
         <div className="badge text-secondary bg-primary-subtle mt-51">
           {product.partNumber}

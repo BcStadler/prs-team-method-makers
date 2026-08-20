@@ -11,6 +11,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useUserContext } from "../App";
 import { IRequestLine } from "../requestLines/IRequestLine";
 import { requestLineAPI } from "../requestLines/RequestLineAPI";
+import { canReviewRequest } from "./requestUtilities";
 
 interface IRejectionForm {
   rejectionReason: string | undefined;
@@ -67,7 +68,7 @@ function RequestDetailPage() {
   }
 
   async function approve() {
-    if (!request) return;
+    if (!request || !canReviewRequest(request, authenticatedUser)) return;
     setLoading(true);
     try {
       await requestAPI.approve(request);
@@ -82,7 +83,7 @@ function RequestDetailPage() {
   }
 
   function userCanReview() {
-    return request?.userId == authenticatedUser?.id;
+    return request !== undefined && canReviewRequest(request, authenticatedUser);
   }
 
   const save: SubmitHandler<IRejectionForm> = async (form: IRejectionForm) => {
@@ -93,6 +94,7 @@ function RequestDetailPage() {
   };
 
   async function reject(requestId: number, rejectionReason: string) {
+    if (!request || !canReviewRequest(request, authenticatedUser)) return;
     setLoading(true);
     try {
       await requestAPI.reject(requestId, rejectionReason);
@@ -173,7 +175,9 @@ function RequestDetailPage() {
       </Modal>
       {request?.status === "REVIEW" && !userCanReview() && (
         <div className="alert alert-warning">
-          You are not allowed to review your own requests.
+          {authenticatedUser?.isReviewer
+            ? "This request is not yours to review."
+            : "You aren't a reviewer."}
         </div>
       )}
       <div className="d-flex justify-content-between pb-4 mb-4 border-bottom border-2">
