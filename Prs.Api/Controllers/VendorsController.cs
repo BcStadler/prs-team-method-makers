@@ -25,13 +25,9 @@ namespace Prs.Api.Controllers {
         [HttpGet("{id}")]
         public async Task<ActionResult<Vendor>> GetById(int id) {
             var vendor = await _db.Vendors.FindAsync(id);
-                
+
             if (vendor == null) {
                 return NotFound();
-            }
-
-            foreach (var product in vendor.Products) {
-                product.Vendor = null;
             }
 
             return vendor;

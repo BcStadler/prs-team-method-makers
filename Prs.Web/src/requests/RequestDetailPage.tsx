@@ -58,6 +58,41 @@ function RequestDetailPage() {
     }
   }
 
+async function duplicate() {
+  if (!request) return;
+  setLoading(true);
+
+  try {
+    const newRequestPayload: IRequest = {
+      id: 0,
+      description: request.description ? `Copy of ${request.description}` : "Copy of Request",
+      justification: request.justification,
+      deliveryMode: request.deliveryMode,
+      status: "NEW",
+      rejectionReason: undefined,
+      total: request.total,
+      userId: authenticatedUser?.id ?? request.userId,
+      requestLines:
+        request.requestLines?.map((line) => ({
+          id: undefined,
+          requestId: undefined,
+          productId: line.productId,
+          quantity: line.quantity,
+          product: undefined,
+          request: undefined,
+        })) ?? [],
+    };
+
+    const createdRequest = await requestAPI.post(newRequestPayload);
+    toast.success("Request duplicated successfully.");
+    navigate(`/requests/detail/${createdRequest.id}`);
+  } catch (error: any) {
+    toast.error(error.message || "Failed to duplicate request.");
+  } finally {
+    setLoading(false);
+  }
+}
+
   async function review() {
     if (!request) return;
     setLoading(true);
@@ -131,7 +166,7 @@ function RequestDetailPage() {
 
   useEffect(() => {
     loadRequest();
-  }, []);
+  }, [id]);
 
   const handleCommentAdded = (newComment: IComment) => {
     setComments([...comments, newComment]);
@@ -169,6 +204,7 @@ function RequestDetailPage() {
             </div>
             <div className="d-flex justify-content-end gap-2">
               <button
+                type="button"
                 className="btn btn-outline-primary"
                 onClick={handleCloseModal}
               >
@@ -199,6 +235,22 @@ function RequestDetailPage() {
       <div className="d-flex justify-content-between pb-4 mb-4 border-bottom border-2">
         <h2>Request</h2>
         <div className="d-flex justify-content-end gap-2">
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={duplicate}
+            disabled={loading || !request}
+          >
+            <svg
+              className="bi pe-none me-2"
+              width={16}
+              height={16}
+              fill="currentColor"
+            >
+              <use xlinkHref={`${bootstrapIcons}#copy`} />
+            </svg>
+            Duplicate
+          </button>
           {request?.status === "NEW" && (
             <button type="button" className="btn btn-primary" onClick={review}>
               <svg
