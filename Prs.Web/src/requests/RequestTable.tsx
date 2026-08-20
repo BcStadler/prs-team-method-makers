@@ -116,8 +116,20 @@ function RequestTable() {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Description</th>
-              <th scope="col">Status</th>
-              <th scope="col">Total</th>
+              <th
+                scope="col"
+                role="button"
+                onClick={() => handleSortClick("status")}
+              >
+                Status{sortIndicator("status")}
+              </th>
+              <th
+                scope="col"
+                role="button"
+                onClick={() => handleSortClick("total")}
+              >
+                Total{sortIndicator("total")}
+              </th>
               <th scope="col">Requested By</th>
               <th />
             </tr>
