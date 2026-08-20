@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 function ProductList() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<IProduct[]>([]);
-  const productCardSkeletons = Array.from(Array(12), (value, index) => {
+  const productCardSkeletons = Array.from(Array(12), (_unused, index) => {
     return <ProductCardSkeleton key={index} />;
   });
 
