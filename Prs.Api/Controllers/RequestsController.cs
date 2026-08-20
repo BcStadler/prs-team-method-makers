@@ -66,6 +66,44 @@ namespace Prs.Api.Controllers {
             return CreatedAtAction(nameof(GetById), new { id = newRequest.Id }, requestWithUser);
         }
 
+        // POST: api/Requests/5/duplicate
+        [HttpPost("{id}/duplicate")]
+        public async Task<ActionResult<Request>> Duplicate(int id, [FromBody] int userId) {
+            var originalRequest = await _db.Requests
+                                           .Include(request => request.RequestLines)
+                                               .ThenInclude(requestLine => requestLine.Product)
+                                           .SingleOrDefaultAsync(request => request.Id == id);
+
+            if (originalRequest == null) {
+                return NotFound();
+            }
+
+            var newRequest = new Request {
+                Description = $"Copy of {originalRequest.Description}",
+                Justification = originalRequest.Justification,
+                DeliveryMode = originalRequest.DeliveryMode,
+                Status = RequestStatus.New,
+                UserId = userId,
+                RequestLines = originalRequest.RequestLines.Select(requestLine => new RequestLine {
+                    ProductId = requestLine.ProductId,
+                    Quantity = requestLine.Quantity,
+                }).ToList(),
+            };
+            newRequest.Total = originalRequest.RequestLines.Sum(requestLine =>
+                requestLine.Quantity * requestLine.Product!.Price);
+
+            _db.Requests.Add(newRequest);
+            await _db.SaveChangesAsync();
+
+            var requestWithDetails = await _db.Requests
+                                              .Include(request => request.User)
+                                              .Include(request => request.RequestLines)
+                                                  .ThenInclude(requestLine => requestLine.Product)
+                                              .SingleAsync(request => request.Id == newRequest.Id);
+
+            return CreatedAtAction(nameof(GetById), new { id = newRequest.Id }, requestWithDetails);
+        }
+
         // PUT: api/Requests/5
         [HttpPut("{id}")]
         public async Task<ActionResult<Request>> Update(int id, Request updatedRequest) {
