@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Prs.Api.Data;
@@ -24,7 +23,9 @@ namespace Prs.Api.Controllers {
         // GET: api/Vendors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Vendor>> GetById(int id) {
-            var vendor = await _db.Vendors.FindAsync(id);
+            var vendor = await _db.Vendors
+                                  .Include(vendor => vendor.Products)
+                                  .SingleOrDefaultAsync(vendor => vendor.Id == id);
 
             if (vendor == null) {
                 return NotFound();
@@ -55,6 +56,7 @@ namespace Prs.Api.Controllers {
             }
 
             _db.Entry(currentVendor).CurrentValues.SetValues(updatedVendor);
+            await _db.SaveChangesAsync();
 
             return Ok(currentVendor);
         }

@@ -69,7 +69,7 @@ export const requestAPI = {
   },
 
   review(request: IRequest) {
-    return fetch(`${url}/review/${request.id}`, {
+    return fetch(`${url}/${request.id}/review`, {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
@@ -81,7 +81,7 @@ export const requestAPI = {
   },
 
   approve(request: IRequest) {
-    return fetch(`${url}/approve/${request.id}`, {
+    return fetch(`${url}/${request.id}/approve`, {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
@@ -93,7 +93,7 @@ export const requestAPI = {
   },
 
   reject(id: number, rejectionReason: string) {
-    return fetch(`${url}/reject/${id}`, {
+    return fetch(`${url}/${id}/reject`, {
       method: "PUT",
       body: JSON.stringify(rejectionReason),
       headers: {
