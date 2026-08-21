@@ -57,10 +57,14 @@ namespace Prs.Api.Controllers {
 
         // DELETE: api/Comments/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id) {
+        public async Task<IActionResult> Delete(int id, [FromQuery] int? userId = null) {
             var comment = await _db.Comments.FindAsync(id);
             if (comment == null) {
                 return NotFound();
+            }
+
+            if (userId != comment.UserId) {
+                return Forbid();
             }
 
             _db.Comments.Remove(comment);

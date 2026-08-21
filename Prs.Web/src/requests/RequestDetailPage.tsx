@@ -58,40 +58,23 @@ function RequestDetailPage() {
     }
   }
 
-async function duplicate() {
-  if (!request) return;
-  setLoading(true);
+  async function duplicate() {
+    if (!request || !request.id || !authenticatedUser?.id) return;
+    setLoading(true);
 
-  try {
-    const newRequestPayload: IRequest = {
-      id: 0,
-      description: request.description ? `Copy of ${request.description}` : "Copy of Request",
-      justification: request.justification,
-      deliveryMode: request.deliveryMode,
-      status: "NEW",
-      rejectionReason: undefined,
-      total: request.total,
-      userId: authenticatedUser?.id ?? request.userId,
-      requestLines:
-        request.requestLines?.map((line) => ({
-          id: undefined,
-          requestId: undefined,
-          productId: line.productId,
-          quantity: line.quantity,
-          product: undefined,
-          request: undefined,
-        })) ?? [],
-    };
-
-    const createdRequest = await requestAPI.post(newRequestPayload);
-    toast.success("Request duplicated successfully.");
-    navigate(`/requests/detail/${createdRequest.id}`);
-  } catch (error: any) {
-    toast.error(error.message || "Failed to duplicate request.");
-  } finally {
-    setLoading(false);
+    try {
+      const createdRequest = await requestAPI.duplicate(
+        request.id,
+        authenticatedUser.id,
+      );
+      toast.success("Request duplicated successfully.");
+      navigate(`/requests/detail/${createdRequest.id}`);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to duplicate request.");
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   async function review() {
     if (!request) return;
@@ -233,7 +216,10 @@ async function duplicate() {
         </div>
       )}
       <div className="d-flex justify-content-between pb-4 mb-4 border-bottom border-2">
-        <h2>Request</h2>
+        <div className="d-flex align-items-center gap-2">
+          <h2 className="mb-0">Request</h2>
+          <span className="badge bg-info">Comments: {comments.length}</span>
+        </div>
         <div className="d-flex justify-content-end gap-2">
           <button
             type="button"
@@ -318,13 +304,7 @@ async function duplicate() {
         </div>
       </div>
       {loading && <p>Loading...</p>}
-      {request && (
-        <RequestHeader
-          request={request}
-          user={request.user}
-          commentCount={comments.length}
-        />
-      )}
+      {request && <RequestHeader request={request} user={request.user} />}
       {request && (
         <RequestLineTable
           requestId={request.id}
@@ -332,7 +312,7 @@ async function duplicate() {
           onRemove={removeLine}
         />
       )}
-      {request && (
+      {request && request.id !== undefined && (
         <CommentSection
           requestId={request.id}
           comments={comments}

@@ -38,7 +38,7 @@ function CommentSection({
   });
 
   const onSubmit: SubmitHandler<ICommentForm> = async (form: ICommentForm) => {
-    if (!currentUser) {
+    if (!currentUser?.id) {
       toast.error("You must be signed in to comment");
       return;
     }
@@ -69,7 +69,8 @@ function CommentSection({
     if (!confirm("Are you sure you want to delete this comment?")) return;
 
     try {
-      await commentAPI.delete(commentId);
+      if (!currentUser?.id) return;
+      await commentAPI.delete(commentId, currentUser.id);
       onCommentDeleted(commentId);
       toast.success("Comment deleted successfully");
     } catch (error: any) {

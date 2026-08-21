@@ -22,7 +22,9 @@ export const commentAPI = {
       .then(parseJSON);
   },
 
-  delete(id: number) {
-    return fetch(`${url}/${id}`, { method: "DELETE" }).then(checkStatus);
+  delete(id: number, userId: number) {
+    return fetch(`${url}/${id}?userId=${userId}`, { method: "DELETE" }).then(
+      checkStatus,
+    );
   },
 };

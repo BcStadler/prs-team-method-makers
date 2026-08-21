@@ -4,11 +4,22 @@ import { IRequest } from "./IRequest";
 const url = `${BASE_URL}/requests`;
 
 export const requestAPI = {
-  list(status?: string, userId?: number): Promise<IRequest[]> {
+  list(
+    status?: string,
+    userId?: number,
+    excludeUserId?: number,
+    search?: string,
+    sortBy?: string,
+    sortDirection?: string,
+  ): Promise<IRequest[]> {
     let requestsUrl = `${url}`;
     const params = new URLSearchParams();
     if (status) params.set("status", status.toUpperCase());
     if (userId) params.set("userId", userId.toString());
+    if (excludeUserId) params.set("excludeUserId", excludeUserId.toString());
+    if (search) params.set("search", search);
+    if (sortBy) params.set("sortBy", sortBy);
+    if (sortDirection) params.set("sortDirection", sortDirection);
     if (params.toString()) requestsUrl += `?${params.toString()}`;
     return fetch(requestsUrl).then(checkStatus).then(parseJSON);
   },
@@ -21,6 +32,18 @@ export const requestAPI = {
     return fetch(`${url}`, {
       method: "POST",
       body: JSON.stringify(request),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(checkStatus)
+      .then(parseJSON);
+  },
+
+  duplicate(id: number, userId: number): Promise<IRequest> {
+    return fetch(`${url}/${id}/duplicate`, {
+      method: "POST",
+      body: JSON.stringify(userId),
       headers: {
         "Content-Type": "application/json",
       },
