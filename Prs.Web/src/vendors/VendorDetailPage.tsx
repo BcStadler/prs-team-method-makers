@@ -4,7 +4,6 @@ import { useParams, Link } from "react-router-dom";
 import { IVendor } from "./IVendor";
 import { IProduct } from "../products/IProduct";
 import { vendorAPI } from "./VendorAPI";
-import { productAPI } from "../products/ProductAPI";
 import { formatPhoneNumber } from "../utility/formatUtilities";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import toast from "react-hot-toast";
@@ -23,17 +22,10 @@ function VendorDetailPage() {
       try {
         setLoading(true);
 
-        const [vendorData, allProducts] = await Promise.all([
-          vendorAPI.find(vendorId),
-          productAPI.list(),
-        ]);
+        const vendorData = await vendorAPI.find(vendorId);
 
         setVendor(vendorData);
-
-        const vendorProducts = allProducts.filter(
-          (p: IProduct) => p.vendorId === vendorId
-        );
-        setProducts(vendorProducts);
+        setProducts(vendorData.products ?? []);
       } catch (error: any) {
         toast.error(error.message || "Could not load vendor details.");
       } finally {
@@ -167,31 +159,19 @@ function VendorDetailPage() {
               <tbody>
                 {products.map((product: IProduct) => (
                   <tr key={product.id} className="border-bottom border-1">
-                    <td
-                      className="py-3"
-                      style={{ backgroundColor: "#f8f9fa" }}
-                    >
+                    <td className="py-3" style={{ backgroundColor: "#f8f9fa" }}>
                       {product.partNumber}
                     </td>
-                    <td
-                      className="py-3"
-                      style={{ backgroundColor: "#f8f9fa" }}
-                    >
+                    <td className="py-3" style={{ backgroundColor: "#f8f9fa" }}>
                       {product.name}
                     </td>
-                    <td
-                      className="py-3"
-                      style={{ backgroundColor: "#f8f9fa" }}
-                    >
+                    <td className="py-3" style={{ backgroundColor: "#f8f9fa" }}>
                       {(product.price ?? 0).toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
                       })}
                     </td>
-                    <td
-                      className="py-3"
-                      style={{ backgroundColor: "#f8f9fa" }}
-                    >
+                    <td className="py-3" style={{ backgroundColor: "#f8f9fa" }}>
                       {product.unit}
                     </td>
                   </tr>
