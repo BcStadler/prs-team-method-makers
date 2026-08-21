@@ -19,19 +19,47 @@ namespace Prs.Api.Controllers {
         // GET: api/Requests?status=REVIEW
         // GET: api/Requests?status=APPROVED
         // GET: api/Requests?status=REJECTED
-        // GET: api/Requests?userId=5
+        // GET: api/Requests?userId=5&excludeUserId=3&search=office&sortBy=total&sortDirection=desc
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Request>>> GetAll([FromQuery] string? status = null, [FromQuery] int? userId = null) {
+        public async Task<ActionResult<IEnumerable<Request>>> GetAll(
+            [FromQuery] string? status = null,
+            [FromQuery] int? userId = null,
+            [FromQuery] int? excludeUserId = null,
+            [FromQuery] string? search = null,
+            [FromQuery] string? sortBy = null,
+            [FromQuery] string? sortDirection = null) {
             var query = _db.Requests
                            .Include(request => request.User)
                            .AsQueryable();
 
             if (status != null) {
-                query = query.Where(request => request.Status != status);
+                query = query.Where(request => request.Status == status);
             }
 
-            if (userId != null) {
+            if (excludeUserId != null) {
+                query = query.Where(request => request.UserId != excludeUserId);
+            } else if (userId != null) {
                 query = query.Where(request => request.UserId == userId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search)) {
+                query = query.Where(request => request.Description.Contains(search) ||
+                                               request.Justification.Contains(search));
+            }
+
+            switch (sortBy?.ToLowerInvariant()) {
+                case "total" when sortDirection?.ToLowerInvariant() == "desc":
+                    query = query.OrderByDescending(request => request.Total);
+                    break;
+                case "total":
+                    query = query.OrderBy(request => request.Total);
+                    break;
+                case "status" when sortDirection?.ToLowerInvariant() == "desc":
+                    query = query.OrderByDescending(request => request.Status);
+                    break;
+                case "status":
+                    query = query.OrderBy(request => request.Status);
+                    break;
             }
 
             return await query.ToListAsync();
