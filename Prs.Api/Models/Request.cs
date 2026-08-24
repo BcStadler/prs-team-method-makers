@@ -23,5 +23,6 @@ public class Request {
     public User? User { get; set; } = null;
 
     public ICollection<RequestLine> RequestLines { get; set; } = new List<RequestLine>();
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
 }

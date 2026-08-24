@@ -1,3 +1,4 @@
+// src/vendors/VendorCard.tsx
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import { Link } from "react-router-dom";
 import { IVendor } from "./IVendor";
@@ -39,6 +40,9 @@ function VendorCard({ vendor, onRemove }: IVendorCardProps) {
               </svg>
             </Dropdown.Toggle>
             <Dropdown.Menu>
+              <Dropdown.Item as={Link} to={`/vendors/detail/${vendor.id}`}>
+                Details
+              </Dropdown.Item>
               <Dropdown.Item as={Link} to={`/vendors/edit/${vendor.id}`}>
                 Edit
               </Dropdown.Item>
@@ -68,10 +72,7 @@ function VendorCard({ vendor, onRemove }: IVendorCardProps) {
           {vendor.city}, {vendor.state} {vendor.zip}
         </div>
 
-        {/* <abbr title="Phone">P:</abbr> */}
-        {vendor.phone && (
-          <div className="text-secondary">{formatPhoneNumber(vendor.phone)}</div>
-        )}
+        <div className="text-secondary">{formatPhoneNumber(vendor.phone)}</div>
 
         {vendor.email && (
           <div className="text-secondary">

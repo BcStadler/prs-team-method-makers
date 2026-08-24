@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 namespace Prs.Api.Models;
 
 [Index("Code", IsUnique = true)]
-public class Vendor {
+public class Vendor
+{
 
     public int Id { get; set; } = 0;
     [StringLength(30)]
@@ -23,5 +24,7 @@ public class Vendor {
     public string? Phone { get; set; } = null;
     [StringLength(255)]
     public string? Email { get; set; } = null;
+
+    public ICollection<Product> Products { get; set; } = new List<Product>();
 
 }

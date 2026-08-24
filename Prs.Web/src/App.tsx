@@ -20,13 +20,21 @@ export function useUserContext(): UserContextType {
   return userContext;
 }
 
-function getPersistedUser(){
-  return undefined;
+function getPersistedUser(): IUser | undefined {
+  const persistedUser = localStorage.getItem("user");
+  if (!persistedUser) return undefined;
+
+  try {
+    return JSON.parse(persistedUser) as IUser;
+  } catch {
+    localStorage.removeItem("user");
+    return undefined;
+  }
 }
 
 function App() {
   const [user, setUser] = useState<IUser | undefined>(getPersistedUser());
-  
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <Toaster

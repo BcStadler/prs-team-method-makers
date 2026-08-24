@@ -10,6 +10,7 @@ public class PrsDbContext : DbContext {
     public DbSet<Product> Products { get; set; } = default!;
     public DbSet<Request> Requests { get; set; } = default!;
     public DbSet<RequestLine> RequestLines { get; set; } = default!;
+    public DbSet<Comment> Comments { get; set; } = default!;
 
     public PrsDbContext(DbContextOptions<PrsDbContext> options) : base(options) { }
 

@@ -9,8 +9,12 @@ import { IProduct } from "./IProduct";
 const url = `${BASE_URL}/products`;
 
 export const productAPI = {
-  list(): Promise<IProduct[]> {
-    return fetch(`${url}`)
+  list(vendorId?: number): Promise<IProduct[]> {
+    const params = new URLSearchParams();
+    if (vendorId) params.set("vendorId", vendorId.toString());
+
+    const queryString = params.toString();
+    return fetch(`${url}${queryString ? `?${queryString}` : ""}`)
       .then(delay(200))
       .then(checkStatus)
       .then(parseJSON);

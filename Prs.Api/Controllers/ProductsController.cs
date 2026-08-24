@@ -15,11 +15,18 @@ namespace Prs.Api.Controllers {
         }
 
         // GET: api/Products
+        // GET: api/Products?vendorId=3
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll() {
-            return await _db.Products
-                            .Include(product => product.Vendor)
-                            .ToListAsync();
+        public async Task<ActionResult<IEnumerable<Product>>> GetAll([FromQuery] int? vendorId = null) {
+            var query = _db.Products
+                           .Include(product => product.Vendor)
+                           .AsQueryable();
+
+            if (vendorId != null) {
+                query = query.Where(product => product.VendorId == vendorId);
+            }
+
+            return await query.ToListAsync();
         }
 
         // GET: api/Products/5

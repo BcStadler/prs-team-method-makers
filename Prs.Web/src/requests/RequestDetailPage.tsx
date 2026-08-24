@@ -12,6 +12,9 @@ import { useUserContext } from "../App";
 import { IRequestLine } from "../requestLines/IRequestLine";
 import { requestLineAPI } from "../requestLines/RequestLineAPI";
 import { canReviewRequest } from "./requestUtilities";
+import { IComment } from "./IComment";
+import { commentAPI } from "./CommentAPI";
+import CommentSection from "./CommentSection";
 
 interface IRejectionForm {
   rejectionReason: string | undefined;
@@ -22,6 +25,7 @@ function RequestDetailPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [request, setRequest] = useState<IRequest | undefined>(undefined);
+  const [comments, setComments] = useState<IComment[]>([]);
   const [showModal, setShowModal] = useState(false);
   const { user: authenticatedUser } = useUserContext();
 
@@ -44,9 +48,29 @@ function RequestDetailPage() {
     try {
       const request = await requestAPI.find(requestId);
       setRequest(request);
+      const loadedComments = await commentAPI.getByRequestId(requestId);
+      setComments(loadedComments);
     } catch (error: any) {
       toast.error(error.message);
       throw new Error("There was an error loading the request");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function duplicate() {
+    if (!request || !request.id || !authenticatedUser?.id) return;
+    setLoading(true);
+
+    try {
+      const createdRequest = await requestAPI.duplicate(
+        request.id,
+        authenticatedUser.id,
+      );
+      toast.success("Request duplicated successfully.");
+      navigate(`/requests/detail/${createdRequest.id}`);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to duplicate request.");
     } finally {
       setLoading(false);
     }
@@ -83,7 +107,9 @@ function RequestDetailPage() {
   }
 
   function userCanReview() {
-    return request !== undefined && canReviewRequest(request, authenticatedUser);
+    return (
+      request !== undefined && canReviewRequest(request, authenticatedUser)
+    );
   }
 
   const save: SubmitHandler<IRejectionForm> = async (form: IRejectionForm) => {
@@ -114,7 +140,7 @@ function RequestDetailPage() {
     let requestWithLineRemoved = {
       ...request,
       requestLines: request?.requestLines.filter(
-        (l) => l.id === requestLine.id
+        (l) => l.id === requestLine.id,
       ),
     } as IRequest;
     setRequest(requestWithLineRemoved);
@@ -123,7 +149,15 @@ function RequestDetailPage() {
 
   useEffect(() => {
     loadRequest();
-  }, []);
+  }, [id]);
+
+  const handleCommentAdded = (newComment: IComment) => {
+    setComments([...comments, newComment]);
+  };
+
+  const handleCommentDeleted = (commentId: number) => {
+    setComments(comments.filter((c) => c.id !== commentId));
+  };
 
   return (
     <section className="content container-fluid mx-5 my-2 py-4">
@@ -153,6 +187,7 @@ function RequestDetailPage() {
             </div>
             <div className="d-flex justify-content-end gap-2">
               <button
+                type="button"
                 className="btn btn-outline-primary"
                 onClick={handleCloseModal}
               >
@@ -181,8 +216,27 @@ function RequestDetailPage() {
         </div>
       )}
       <div className="d-flex justify-content-between pb-4 mb-4 border-bottom border-2">
-        <h2>Request</h2>
+        <div className="d-flex align-items-center gap-2">
+          <h2 className="mb-0">Request</h2>
+          <span className="badge bg-info">Comments: {comments.length}</span>
+        </div>
         <div className="d-flex justify-content-end gap-2">
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={duplicate}
+            disabled={loading || !request}
+          >
+            <svg
+              className="bi pe-none me-2"
+              width={16}
+              height={16}
+              fill="currentColor"
+            >
+              <use xlinkHref={`${bootstrapIcons}#copy`} />
+            </svg>
+            Duplicate
+          </button>
           {request?.status === "NEW" && (
             <button type="button" className="btn btn-primary" onClick={review}>
               <svg
@@ -256,6 +310,15 @@ function RequestDetailPage() {
           requestId={request.id}
           requestLines={request.requestLines}
           onRemove={removeLine}
+        />
+      )}
+      {request && request.id !== undefined && (
+        <CommentSection
+          requestId={request.id}
+          comments={comments}
+          currentUser={authenticatedUser}
+          onCommentAdded={handleCommentAdded}
+          onCommentDeleted={handleCommentDeleted}
         />
       )}
     </section>

@@ -4,9 +4,23 @@ import { IRequest } from "./IRequest";
 const url = `${BASE_URL}/requests`;
 
 export const requestAPI = {
-  list(status?: string): Promise<IRequest[]> {
+  list(
+    status?: string,
+    userId?: number,
+    excludeUserId?: number,
+    search?: string,
+    sortBy?: string,
+    sortDirection?: string,
+  ): Promise<IRequest[]> {
     let requestsUrl = `${url}`;
-    if (status) requestsUrl += `?status=${status.toUpperCase()}`;
+    const params = new URLSearchParams();
+    if (status) params.set("status", status.toUpperCase());
+    if (userId) params.set("userId", userId.toString());
+    if (excludeUserId) params.set("excludeUserId", excludeUserId.toString());
+    if (search) params.set("search", search);
+    if (sortBy) params.set("sortBy", sortBy);
+    if (sortDirection) params.set("sortDirection", sortDirection);
+    if (params.toString()) requestsUrl += `?${params.toString()}`;
     return fetch(requestsUrl).then(checkStatus).then(parseJSON);
   },
 
@@ -18,6 +32,18 @@ export const requestAPI = {
     return fetch(`${url}`, {
       method: "POST",
       body: JSON.stringify(request),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(checkStatus)
+      .then(parseJSON);
+  },
+
+  duplicate(id: number, userId: number): Promise<IRequest> {
+    return fetch(`${url}/${id}/duplicate`, {
+      method: "POST",
+      body: JSON.stringify(userId),
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,7 +69,7 @@ export const requestAPI = {
   },
 
   review(request: IRequest) {
-    return fetch(`${url}/review/${request.id}`, {
+    return fetch(`${url}/${request.id}/review`, {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
@@ -55,7 +81,7 @@ export const requestAPI = {
   },
 
   approve(request: IRequest) {
-    return fetch(`${url}/approve/${request.id}`, {
+    return fetch(`${url}/${request.id}/approve`, {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
@@ -67,7 +93,7 @@ export const requestAPI = {
   },
 
   reject(id: number, rejectionReason: string) {
-    return fetch(`${url}/reject/${id}`, {
+    return fetch(`${url}/${id}/reject`, {
       method: "PUT",
       body: JSON.stringify(rejectionReason),
       headers: {
