@@ -5,8 +5,17 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 function ProductCardSkeleton() {
   return (
-    <Card className="" style={{ width: "23rem" }}>
+    <Card className="overflow-hidden" style={{ width: "23rem" }}>
       <ProgressBar now={30} variant="primary-subtle" />
+      <div
+        className="d-flex align-items-center justify-content-center bg-body-tertiary border-bottom"
+        style={{ height: "180px" }}
+      >
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: "70%", height: "64px" }}
+        ></div>
+      </div>
       <address className="py-4 px-4">
         <div className="d-flex justify-content-between1 align-items-center1 justify-content-end">
           {" "}
