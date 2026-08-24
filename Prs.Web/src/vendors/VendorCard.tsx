@@ -72,7 +72,11 @@ function VendorCard({ vendor, onRemove }: IVendorCardProps) {
           {vendor.city}, {vendor.state} {vendor.zip}
         </div>
 
-        <div className="text-secondary">{formatPhoneNumber(vendor.phone)}</div>
+        {vendor.phone && (
+          <div className="text-secondary">
+            {formatPhoneNumber(vendor.phone)}
+          </div>
+        )}
 
         {vendor.email && (
           <div className="text-secondary">
