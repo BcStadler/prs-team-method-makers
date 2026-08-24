@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,11 @@ namespace Prs.Api.Controllers {
 
         public RequestsController(PrsDbContext db) {
             _db = db;
+        }
+
+        private static string EscapeCsv(string? value) {
+            var escapedValue = value?.Replace("\"", "\"\"") ?? string.Empty;
+            return $"\"{escapedValue}\"";
         }
 
         // GET: api/Requests
@@ -63,6 +70,70 @@ namespace Prs.Api.Controllers {
             }
 
             return await query.ToListAsync();
+        }
+
+        // GET: api/Requests/export
+        [HttpGet("export")]
+        public async Task<IActionResult> Export(
+            [FromQuery] string? status = null,
+            [FromQuery] int? userId = null,
+            [FromQuery] int? excludeUserId = null,
+            [FromQuery] string? search = null,
+            [FromQuery] string? sortBy = null,
+            [FromQuery] string? sortDirection = null) {
+            var query = _db.Requests
+                           .Include(request => request.User)
+                           .AsQueryable();
+
+            if (status != null) {
+                query = query.Where(request => request.Status == status);
+            }
+
+            if (excludeUserId != null) {
+                query = query.Where(request => request.UserId != excludeUserId);
+            } else if (userId != null) {
+                query = query.Where(request => request.UserId == userId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search)) {
+                query = query.Where(request => request.Description.Contains(search) ||
+                                               request.Justification.Contains(search));
+            }
+
+            switch (sortBy?.ToLowerInvariant()) {
+                case "total" when sortDirection?.ToLowerInvariant() == "desc":
+                    query = query.OrderByDescending(request => request.Total);
+                    break;
+                case "total":
+                    query = query.OrderBy(request => request.Total);
+                    break;
+                case "status" when sortDirection?.ToLowerInvariant() == "desc":
+                    query = query.OrderByDescending(request => request.Status);
+                    break;
+                case "status":
+                    query = query.OrderBy(request => request.Status);
+                    break;
+            }
+
+            var requests = await query.ToListAsync();
+            var csv = new StringBuilder();
+            csv.AppendLine("id,description,justification,status,total,requested-by name");
+            foreach (var request in requests) {
+                var requestedByName = request.User == null
+                    ? string.Empty
+                    : $"{request.User.FirstName} {request.User.LastName}".Trim();
+                csv.AppendLine(string.Join(",", new[] {
+                    request.Id.ToString(CultureInfo.InvariantCulture),
+                    EscapeCsv(request.Description),
+                    EscapeCsv(request.Justification),
+                    EscapeCsv(request.Status),
+                    request.Total.ToString("0.00", CultureInfo.InvariantCulture),
+                    EscapeCsv(requestedByName),
+                }));
+            }
+
+            var utf8Bom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true);
+            return File(utf8Bom.GetBytes(csv.ToString()), "text/csv; charset=utf-8", "requests.csv");
         }
 
         // GET: api/Requests/5

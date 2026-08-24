@@ -157,6 +157,20 @@ function RequestTable() {
     setSearchParams({});
   }
 
+  async function exportRequests() {
+    try {
+      const csv = await requestAPI.export(searchParams);
+      const downloadUrl = URL.createObjectURL(csv);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = "requests.csv";
+      link.click();
+      URL.revokeObjectURL(downloadUrl);
+    } catch (error: any) {
+      toast.error(error.message, { duration: 6000 });
+    }
+  }
+
   const otherUsers = users
     .filter((requester) => requester.id !== user?.id)
     .sort((a, b) =>
@@ -266,6 +280,12 @@ function RequestTable() {
           onClick={clearFilters}
         >
           Clear filters
+        </button>
+        <button
+          className="btn btn-outline-primary align-self-end"
+          onClick={exportRequests}
+        >
+          Export CSV
         </button>
       </div>
       <section className="list d-flex flex-row flex-wrap bg-body-tertiary gap-5 p-4 rounded-4">

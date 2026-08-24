@@ -24,6 +24,13 @@ export const requestAPI = {
     return fetch(requestsUrl).then(checkStatus).then(parseJSON);
   },
 
+  export(searchParams: URLSearchParams): Promise<Blob> {
+    const query = searchParams.toString();
+    return fetch(`${url}/export${query ? `?${query}` : ""}`)
+      .then(checkStatus)
+      .then((response) => response.blob());
+  },
+
   find(id: number): Promise<IRequest> {
     return fetch(`${url}/${id}`).then(checkStatus).then(parseJSON);
   },
