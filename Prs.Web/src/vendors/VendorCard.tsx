@@ -74,7 +74,11 @@ function VendorCard({ vendor, onRemove }: IVendorCardProps) {
 
         <div className="text-secondary">{formatPhoneNumber(vendor.phone)}</div>
 
-        <div className="text-secondary">{vendor.email}</div>
+        {vendor.email && (
+          <div className="text-secondary">
+            <a href={`mailto:${vendor.email}`}>{vendor.email}</a>
+          </div>
+        )}
       </address>
     </Card>
   );
